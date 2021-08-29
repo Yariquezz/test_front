@@ -55,10 +55,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'awesome.urls'
 
+TEMPLATES_DIRS = os.path.join(BASE_DIR, 'templates')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIRS],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,7 +85,8 @@ DATABASES = {
         'NAME': 'awesome',
         'USER': 'user1',
         'PASSWORD': 'password',
-        'HOST': 'localhost',
+        # 'HOST': 'localhost',
+        'HOST': '192.168.0.108',
         'PORT': '5432',
     }
 }
