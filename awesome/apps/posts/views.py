@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponse, Http404, redirect
+from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
-from .forms import LoginForm
+from .forms import LoginForm, CreatePostForm, EditPostForm
 from .models import Post
 import logging
 
@@ -18,6 +19,23 @@ class PostList(generic.ListView):
 class PostDetail(generic.DetailView):
     model = Post
     template_name = 'posts/post_detail.html'
+
+
+class CreatePost(generic.CreateView):
+    model = Post
+    form_class = CreatePostForm
+    template_name = 'posts/create.html'
+
+
+class EditPost(generic.UpdateView):
+    model = Post
+    form_class = EditPostForm
+    template_name = 'posts/edit.html'
+
+
+class DeletePost(generic.DeleteView):
+    model = Post
+    success_url = reverse_lazy('posts/delete.html')
 
 
 def login_form(request):

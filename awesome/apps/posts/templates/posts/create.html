@@ -40,34 +40,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/posts/">News</a>
                 </li>
-                <li>
-                    {% if user.is_staff %}
-                    <a class="nav-link" href="{% url 'posts:create' %}">Crete new post</a>
-                    {% else %}
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Crete new post</a>
-                    {% endif %}
-                </li>
-                <li>
-                    {% if user.is_staff %}
-                    <a class="nav-link" href="{% url 'posts:edit' slug=object.slug %}">Edit this post</a>
-                    {% else %}
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Edit this post</a>
-                    {% endif %}
-                </li>
             </ul>
         </div>
     </div>
 </nav>
 {% endblock %}
 {% block main_content %}
-<article class="blog-post">
-    <h2 class="blog-post-title">{{ object.title }}</h2>
-    <p class="blog-post-meta">{{ post.created_on}} | <a href="{% url 'posts:post_detail' post.slug  %}">
-            {{ post.author }}</a>
-    <p>{{ object.content | safe }}</p>
-    {% if user.is_staff %}
-    <a class="btn btn-sm btn-outline-secondary" href="{% url 'posts:edit' slug=object.slug %}">Edit</a>
-    {% endif %}
-
-</article>
+<br /><br />
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br /><br />
+        <button class="btn btn-black">Save</button>
+    </form>
+</div>
 {% endblock %}

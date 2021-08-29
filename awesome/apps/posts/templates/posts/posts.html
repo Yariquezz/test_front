@@ -41,7 +41,11 @@
                     <a class="nav-link" href="/posts/">News</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="/create/" tabindex="-1" aria-disabled="true">Crete new post</a>
+                    {% if user.is_staff %}
+                    <a class="nav-link" href="{% url 'posts:create' %}">Crete new post</a>
+                    {% else %}
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Crete new post</a>
+                    {% endif %}
                 </li>
             </ul>
         </div>
@@ -108,11 +112,13 @@
 <div class="row g-5">
     {% for post in post_list %}
     <article class="blog-post">
-        <h2 class="blog-post-title"><a href="{% url 'posts:post_detail' post.slug  %}">{{ post.title }}</a></h2>
+        <h2 class="blog-post-title">
+            <a class="link-secondary" href="{% url 'posts:post_detail' post.slug  %}">{{ post.title }}</a>
+        </h2>
         <p class="blog-post-meta">{{ post.created_on}} | <a href="{% url 'posts:post_detail' post.slug  %}">
                 {{ post.author }}</a>
         </p>
-        <p>{{post.content|slice:" :200" }}</p>
+        <p>{{post.content|slice:" :200"|safe }}</p>
     </article>
     {% endfor %}
 </div>
