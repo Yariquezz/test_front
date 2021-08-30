@@ -40,13 +40,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/posts/">News</a>
                 </li>
+                {% if user.is_staff %}
                 <li>
-                    {% if user.is_staff %}
                     <a class="nav-link" href="/create/">Crete new post</a>
-                    {% else %}
-                    <a class="nav-link disabled" href="/delete/" tabindex="-1" aria-disabled="true">Delete post</a>
-                    {% endif %}
                 </li>
+                <li>
+                    <a class="nav-link" href="{% url 'posts:delete' slug=object.slug %}">Delete this spost</a>
+                </li>
+                {% else %}
+                <li>
+                    <a lass="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Crete new post</a>
+                </li>
+                <li>
+                    <a lass="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Delete this spost</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -60,6 +68,7 @@
         {{ form.as_p }}
         <br /><br />
         <button class="btn btn-black">Save</button>
+        <a class="btn btn-secondary" href="{% url 'posts:delete' slug=object.slug %}">Delete</a>
     </form>
 </div>
 {% endblock %}

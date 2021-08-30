@@ -85,10 +85,17 @@ DATABASES = {
         'NAME': 'awesome',
         'USER': 'user1',
         'PASSWORD': 'password',
-        # 'HOST': 'localhost',
         'HOST': '192.168.0.108',
         'PORT': '5432',
-    }
+    },
+    'default1': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'awesome',
+        'USER': 'user1',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
 }
 
 # Password validation

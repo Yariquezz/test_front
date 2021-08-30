@@ -35,7 +35,7 @@ class EditPost(generic.UpdateView):
 
 class DeletePost(generic.DeleteView):
     model = Post
-    success_url = reverse_lazy('posts/delete.html')
+    success_url = reverse_lazy('posts:posts')
 
 
 def login_form(request):

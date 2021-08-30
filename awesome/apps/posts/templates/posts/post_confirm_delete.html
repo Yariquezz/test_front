@@ -40,43 +40,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/posts/">News</a>
                 </li>
-
-                {% if user.is_staff %}
-                <li>
-                    <a class="nav-link" href="/create/">Crete new post</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="{% url 'posts:edit' slug=object.slug %}">Edit this post</a>
-                </li>
-                <li>
-                    <a class="nav-link" href="{% url 'posts:delete' slug=object.slug %}">Delete this spost</a>
-                </li>
-                {% else %}
-                <li>
-                    <a lass="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Crete new post</a>
-                </li>
-                <li>
-                    <a lass="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Edit this post/a>
-                </li>
-                <li>
-                    <a lass="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Delete this spost</a>
-                </li>
-                {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 {% endblock %}
 {% block main_content %}
-<article class="blog-post">
-    <h2 class="blog-post-title">{{ object.title }}</h2>
-    <p class="blog-post-meta">{{ post.created_on}} | <a href="{% url 'posts:post_detail' post.slug  %}">
-            {{ post.author }}</a>
-    <p>{{ object.content | safe }}</p>
-    {% if user.is_staff %}
-    <a class="btn btn-sm btn-outline-primary" href="{% url 'posts:edit' slug=object.slug %}">Edit</a>
-    <a class="btn btn-sm btn-outline-secondary" href="{% url 'posts:delete' slug=object.slug %}">Delete</a>
-    {% endif %}
-
-</article>
+<div class="form-group">
+    <form method="POST">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object.title }}"?</p>
+        <button type="submit" class="btn btn-secondary" value="Confirm">Delete!</button>
+        <a class="btn btn-black" onClick="javascript:history.go(-1);">Back</a>
+    </form>
+</div>
 {% endblock %}
