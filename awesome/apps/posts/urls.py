@@ -5,6 +5,7 @@ app_name = 'posts'
 
 urlpatterns = [
     path('', views.login_form, name='login'),
+    path('search/', views.SearchResultsView.as_view(), name='search_results'),
     path('logout/', views.logout_form, name='logout'),
     path('posts/', views.PostList.as_view(), name='posts'),
     path('create/', views.CreatePost.as_view(), name='create'),

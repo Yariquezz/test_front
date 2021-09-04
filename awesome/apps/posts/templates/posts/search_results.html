@@ -1,0 +1,71 @@
+{% extends 'posts/base.html' %}
+
+{% block title %} Search Results {% endblock %}
+{% block nav_bar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/posts/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts/">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/posts/">News</a>
+            </li>
+            <li class="nav-item">
+                {% if user.is_staff %}
+                <a class="nav-link" href="{% url 'posts:create' %}">Crete new post</a>
+                {% else %}
+                <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Crete new post</a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout/">Log out</a>
+            </li>
+        </ul>
+    </div>
+    <form class="form-inline my-2 my-lg-0" action="{% url 'posts:search_results' %}" method="GET">
+        <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <!-- <button class="btn btn-outline-secondary" type="submit">Search</button> -->
+    </form>
+</nav>
+{% endblock %}
+{% block top_post %}
+<div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+    <div class="col-md-6 px-0">
+        <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
+        <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
+            efficiently about what’s most interesting in this post’s contents.</p>
+        <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p>
+    </div>
+</div>
+{% endblock %}
+{% block main_content %}
+<div class="row g-5">
+    {% if object_list %}
+    {% for post in object_list %}
+    <article class="blog-post">
+        <h2 class="blog-post-title">
+            <a class="link-secondary" href="{% url 'posts:post_detail' post.slug  %}">{{ post.title }}</a>
+        </h2>
+        <p class="blog-post-meta">{{ post.created_on}} | <a href="{% url 'posts:post_detail' post.slug  %}">
+                {{ post.author }}</a>
+        </p>
+        <p>{{post.content|slice:" :50"|safe }}</p>
+    </article>
+    {% endfor %}
+    {% else %}
+    <article class="blog-post">
+        <h2 class="blog-post-title">Not found...</h2>
+    </article>
+    {% endif %}
+</div>
+
+</div>
+{% endblock %}

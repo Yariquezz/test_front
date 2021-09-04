@@ -4,7 +4,15 @@ from .models import Post
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'status', 'created_on')
+    list_display = (
+        'title',
+        'slug',
+        'status',
+        'created_on',
+        'image_1',
+        'image_2',
+        'image_3',
+    )
     list_filter = ("status",)
     search_fields = ['title', 'content']
     prepopulated_fields = {'slug': ('title',)}

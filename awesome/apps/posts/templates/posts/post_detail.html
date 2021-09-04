@@ -73,6 +73,10 @@
     <p class="blog-post-meta">{{ post.created_on}} | <a href="{% url 'posts:post_detail' post.slug  %}">
             {{ post.author }}</a>
     <p>{{ object.content | safe }}</p>
+    {% if object.image_1 %}
+    <img src="{{ post.image_1.url }}" class="card-img-top" alt="...">
+    </br></br>
+    {% endif %}
     {% if user.is_staff %}
     <a class="btn btn-sm btn-outline-primary" href="{% url 'posts:edit' slug=object.slug %}">Edit</a>
     <a class="btn btn-sm btn-outline-secondary" href="{% url 'posts:delete' slug=object.slug %}">Delete</a>

@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from .forms import LoginForm, CreatePostForm, EditPostForm
 from .models import Post
+from django.db.models import Q
 import logging
 
 
@@ -36,6 +37,18 @@ class EditPost(generic.UpdateView):
 class DeletePost(generic.DeleteView):
     model = Post
     success_url = reverse_lazy('posts:posts')
+
+
+class SearchResultsView(generic.ListView):
+    model = Post
+    template_name = 'posts/search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Post.objects.filter(
+            Q(content__icontains=query) | Q(title__icontains=query))
+        print(object_list)
+        return object_list
 
 
 def login_form(request):
