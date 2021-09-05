@@ -44,6 +44,7 @@
     </form>
 </nav>
 {% endblock %}
+{% if top_post %}
 {% block top_post %}
 <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
@@ -54,6 +55,8 @@
     </div>
 </div>
 {% endblock %}
+{% endif %}
+{% if f_post %}
 {% block featured_posts %}
 <div class="row mb-2">
     {% for f_post in featured_post %}
@@ -79,12 +82,14 @@
         </div>
     </div>
     {% endfor %}
+    {% endif %}
 </div>
 
 {% endblock %}
 {% block main_content %}
 <div class="row g-5">
     <article class="blog-post">
+        {% if post_list %}
         {% for post in post_list %}
         <div class="card mb-3">
             {% if post.image_1 %}
@@ -102,12 +107,12 @@
             </div>
         </div>
         {% endfor %}
+        {% endif %}
     </article>
 </div>
 </div>
 {% endblock %}
 {% block footer %}
 <footer class="blog-footer">
-    <p>This is some additional paragraph placeholder content. It</p>
 </footer>
 {% endblock %}
