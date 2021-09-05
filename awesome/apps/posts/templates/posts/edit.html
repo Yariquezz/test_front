@@ -41,20 +41,27 @@
                     <a class="nav-link" href="/posts/">News</a>
                 </li>
                 {% if user.is_staff %}
-                <li>
+                <li class="nav-item">
                     <a class="nav-link" href="/create/">Crete new post</a>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'posts:delete' slug=object.slug %}">Delete this spost</a>
                 </li>
                 {% else %}
-                <li>
-                    <a lass="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Crete new post</a>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Crete new post</a>
                 </li>
-                <li>
-                    <a lass="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Delete this spost</a>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="" tabindex="-1" aria-disabled="true">Delete this spost</a>
                 </li>
                 {% endif %}
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link" href="/logout/">Log out</a>
+                    {% else %}
+                    <a class="nav-link" href="/">Log in</a>
+                    {% endif %}
+                </li>
             </ul>
         </div>
     </div>

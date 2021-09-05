@@ -16,6 +16,13 @@ class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'posts/posts.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['top_post'] = Post.objects.latest('created_on', '-updated_on')
+        context['featured_post'] = Post.objects.filter(
+            status=1).order_by('created_on')[:2]
+        return context
+
 
 class PostDetail(generic.DetailView):
     model = Post
@@ -47,7 +54,6 @@ class SearchResultsView(generic.ListView):
         query = self.request.GET.get('q')
         object_list = Post.objects.filter(
             Q(content__icontains=query) | Q(title__icontains=query))
-        print(object_list)
         return object_list
 
 

@@ -31,13 +31,15 @@
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="{% static 'posts/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'posts/css/index.css' %}">
     <!-- Document Title -->
     <title>{% block title %} {% endblock %}</title>
 
 </head>
 
 <body>
+    {% load l10n %}
+    {% localize on %}
     <!-- HEADER -->
     <div class="container">
         {% block header %}{% endblock %}
@@ -48,13 +50,18 @@
         {% block top_post %}{% endblock %}
         {% block featured_posts %}{% endblock %}
         {% block main_content %}{% endblock %}
-        {% block sidebars %}
-        {% block about_sidebar %}{% endblock %}
-        {% block archives_sidebar %}{% endblock %}
-        {% block social_sidebar %}{% endblock %}
-        {% endblock %}
+        <div class="col-md-4">
+            <div class="position-sticky" style="top: 2rem;">
+                {% block about_sidebar %}{% endblock %}
+                {% block archives_sidebar %}{% endblock %}
+                {% block social_sidebar %}{% endblock %}
+            </div>
+        </div>
     </main>
-    {% block footer %}{% endblock %}
+    {% block footer %}
+    <footer></footer>
+    {% endblock %}
+    {% endlocalize %}
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
