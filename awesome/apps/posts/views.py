@@ -18,9 +18,14 @@ class PostList(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['top_post'] = Post.objects.latest('created_on', '-updated_on')
-        context['featured_post'] = Post.objects.filter(
-            status=1).order_by('created_on')[:2]
+        try:
+            context['top_post'] = Post.objects.latest(
+                'created_on', '-updated_on')
+            context['featured_post'] = Post.objects.filter(
+                status=1).order_by('created_on')[:2]
+        except Exception as err:
+            logger.error(err)
+
         return context
 
 
