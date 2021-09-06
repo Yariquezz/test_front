@@ -35,7 +35,7 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
     status = models.IntegerField(choices=STATUS, default=0)
-    category = models.CharField(max_length=200)
+    category = models.CharField(max_length=200, default='news')
     image_1 = models.ImageField(null=True, blank=True)
     image_2 = models.ImageField(null=True, blank=True)
     image_3 = models.ImageField(null=True, blank=True)

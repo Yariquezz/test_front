@@ -1,12 +1,12 @@
 from django import forms
 from .models import Post, Category
 
-CHOICES = Category.objects.all().values_list("name", "name")
 
-choice_list = []
-
-for i in CHOICES:
-    choice_list.append(i)
+choice_list = [
+    ("music", "music"),
+    ("sports", "sports"),
+    ("news", "news"),
+]
 
 
 class CreatePostForm(forms.ModelForm):
@@ -29,16 +29,16 @@ class CreatePostForm(forms.ModelForm):
             "title",
             "content",
             "author",
-            "category",
             "status",
+            "category",
             "image_1",
             "image_2",
             "image_3",
         )
         widget = {
             "author": forms.Select(attrs={"class": "form-select"}),
-            "status": forms.Select(choices=choice_list, attrs={"class": "form-select"}),
-            "category": forms.Select(attrs={"class": "form-select"}),
+            "status": forms.Select(attrs={"class": "form-select"}),
+            "categoty": forms.Select(choices=choice_list, attrs={"class": "form-select"}),
         }
 
 

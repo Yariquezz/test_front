@@ -8,6 +8,7 @@ class PostAdmin(admin.ModelAdmin):
         'title',
         'slug',
         'status',
+        'category',
         'created_on',
         'image_1',
         'image_2',
