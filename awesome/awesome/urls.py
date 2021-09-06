@@ -22,7 +22,10 @@ from django.conf import settings
 urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('admin/', admin.site.urls),
-    path('', include('apps.posts.urls')),
+    path('', include('django.contrib.auth.urls')),
+    path('', include('apps.account.urls')),
+    path('posts/', include('apps.posts.urls')),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

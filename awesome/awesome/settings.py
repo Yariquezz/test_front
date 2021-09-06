@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps',
-    'apps.posts'
+    'apps.posts',
+    'apps.account',
 ]
 
 MIDDLEWARE = [
@@ -192,3 +193,5 @@ LOGGING = {
 }
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+LOGIN_REDIRECT_URL = '/posts/'
+LOGOUT_REDIRECT_URL = '/'

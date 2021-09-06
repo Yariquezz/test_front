@@ -1,33 +1,16 @@
 from django import forms
-from django.contrib.auth.models import User
-from .models import Post
+from .models import Post, Category
 
+CHOICES = Category.objects.all().values_list("name", "name")
 
-class LoginForm(forms.Form):
-    username = forms.CharField(
-        label="User Name",
-        widget=forms.TextInput(attrs={
-            "class": "form-control",
-            "placeholder": "User Name"
-        })
-    )
-    password = forms.CharField(
-        label="Password",
-        widget=forms.PasswordInput(attrs={
-            "class": "form-control",
-            "placeholder": "Password"
-        })
-    )
+choice_list = []
 
-    class Meta:
-        model = User
-        fields = [
-            "username",
-            "password"
-        ]
+for i in CHOICES:
+    choice_list.append(i)
 
 
 class CreatePostForm(forms.ModelForm):
+
     title = forms.CharField(
         label="Title",
         widget=forms.TextInput(attrs={
@@ -42,15 +25,20 @@ class CreatePostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = [
+        fields = (
             "title",
             "content",
             "author",
-            "status"
-        ]
+            "category",
+            "status",
+            "image_1",
+            "image_2",
+            "image_3",
+        )
         widget = {
             "author": forms.Select(attrs={"class": "form-select"}),
-            "status": forms.Select(attrs={"class": "form-select"}),
+            "status": forms.Select(choices=choice_list, attrs={"class": "form-select"}),
+            "category": forms.Select(attrs={"class": "form-select"}),
         }
 
 
@@ -66,10 +54,24 @@ class EditPostForm(forms.ModelForm):
             "class": "form-control",
         })
     )
+    category = forms.Form(
+        forms.ChoiceField(
+            choices=choice_list,
+            widget=forms.Select(
+                attrs={
+                    "class": "form-select"
+                }
+            )
+        )
+    )
 
     class Meta:
         model = Post
         fields = [
             "title",
             "content",
+            "category",
+            "image_1",
+            "image_2",
+            "image_3",
         ]

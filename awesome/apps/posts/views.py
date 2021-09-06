@@ -1,9 +1,6 @@
-from django.shortcuts import render, HttpResponse, Http404, redirect
 from django.urls import reverse_lazy
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
 from django.views import generic
-from .forms import LoginForm, CreatePostForm, EditPostForm
+from .forms import CreatePostForm, EditPostForm
 from .models import Post
 from django.db.models import Q
 import logging
@@ -58,37 +55,8 @@ class SearchResultsView(generic.ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         object_list = Post.objects.filter(
-            Q(content__icontains=query) | Q(title__icontains=query))
+            Q(content__icontains=query)
+            | Q(title__icontains=query)
+            | Q(category__icontains=query)
+        )
         return object_list
-
-
-def login_form(request):
-    if request.user.is_authenticated:
-        return redirect('/posts/')
-
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user = authenticate(
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password']
-            )
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('/posts/')
-
-    form = LoginForm()
-    context = {
-        "form": form,
-    }
-    return render(request, 'posts/index.html', context)
-
-
-def logout_form(request):
-    logout(request)
-    form = LoginForm()
-    context = {
-        "form": form,
-    }
-    return render(request, 'posts/index.html', context)

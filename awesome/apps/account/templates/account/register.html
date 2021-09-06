@@ -1,0 +1,31 @@
+{% extends 'account/base.html' %}
+{% block main_content %}
+<div class="sidenav">
+    <div class="login-main-text">
+        <h2>Application<br> Login Page</h2>
+        <p>Login or register from here to access.</p>
+        <p>Or just visit the <a href="/posts/">site</a></p>
+    </div>
+</div>
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+        <div class="login-form">
+            {% if messages %}
+            <div class="postcontent nobottommargin clearfix">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message|safe }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form action="{% url 'account:register' %}" method="post">{% csrf_token %}
+                <div class="form-group">
+                    {{ form.as_p}}
+                    <button type="submit" value="login" class="btn btn-black">Register</button>
+                    <a class="btn btn-secondary" onClick="javascript:history.go(-1);">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

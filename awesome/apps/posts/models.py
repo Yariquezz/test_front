@@ -1,3 +1,4 @@
+from os import name
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -9,6 +10,19 @@ STATUS = (
 )
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse(
+            'posts:search_results',
+            kwargs={"Q": self.name}
+        )
+
+
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
@@ -18,9 +32,10 @@ class Post(models.Model):
         related_name='blog_posts'
     )
     updated_on = models.DateTimeField(auto_now=True)
-    content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
     status = models.IntegerField(choices=STATUS, default=0)
+    category = models.CharField(max_length=200)
     image_1 = models.ImageField(null=True, blank=True)
     image_2 = models.ImageField(null=True, blank=True)
     image_3 = models.ImageField(null=True, blank=True)
